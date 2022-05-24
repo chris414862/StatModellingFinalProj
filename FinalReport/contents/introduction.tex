@@ -1,0 +1,17 @@
+Consider the standard linear regression model
+$$ \bm{y} = X \bm{\theta} + \bm{\epsilon}, $$
+where $\bm{\epsilon} \sim N(0,\sigma^2 I)$. $\bm{y} = (y_1, \dots, y_n)^T $ is the vector of responses, $X$ is the $n \times p$ covariate matrix, $ \bm{\theta} = (\theta_1, \dots, \theta_p)^T \in \mathbb{R}^p$ is the coefficient vector.
+
+To assume sparsity on the prior of $\bm{\theta}$, a shrinkage prior is often imposed on $\theta_j$'s. One popular class of shrinkage prior is the one-group continuous shrinkage prior, which is a hierarchical scale-mixture of Gaussian distributions. 
+$$ \theta_j | \nu_w^2, \tau_j^2 \sim N(0,\nu_w^2\tau_j^2),$$
+where $\tau_j^2 \sim \pi_\tau$ and $\nu_w  \sim \pi_g$ are pre-specified.
+A few choices of the distributions have been shown in induce desirable shrinkage, including the Strawderman-Berger prior, the \textbf{Bayesian Lasso} \citep{park2008bayesian}, the \textbf{horseshoe} prior \citep{carvalho2010horseshoe}, the generalized double Pareto, and the Dirichlet-Laplace prior.
+
+Another popular class pf shrinkage prior is the \textbf{spike-and-slab (SpSL)} priors \citep{mitchell1988bayesian,george1993variable}, also known as two-group mixture priors. It can be written as a mixture of the ``spike'' distribution $\pi_0$, highly concerntrated around zero, and the ``slab'' distribution $\pi_1$, which is relatively disperse.
+
+The paper \citep{shin2021neuronized} proposes \textbf{neuronized priors}, in which each regression coefficient is reparameterized as a product of a weight parameter and a transformed scale parameter via an activation function. Popular shrinkage priors fit this unified form of neuronized priors, including SpSL, Bayesian Lasso, Cauchy, horseshoe, ect.
+
+It is demonstrated in \cite{shin2021neuronized} that the variable selection procedures based on the neuronized priors have the advantage both computationally and theoretically. The characteristic of unifying various classes of shrinkage priors allow one to test out different priors simply by changing the activation function. Additionally, posterior inference of neuronized priors does not rely on the prior-likelihood conjugacy, leading to comparable or better efficiency in computation compared to the standard priors. Moreover, with the conditions put on the activation function and the hyperpriors, the neuronized Bayesian regression achieves the optimal posterior contraction rate and the RWMH algorithm converges to the target distribution at an exponential rate.
+
+The rest part of the paper is organized as follows. Section 2 gives the detailed definition of the neuronized priors. Section 3 shows a few popular shrinkage priors including the SpSL, Bayesian Lasso, horseshoe, and Cauchy priors, and their neuronized counterparts. Section 4 illustrates the computational strategies of posterior inference and the advantages and the neuronized priors. Simulation studies are conducted in Section 5 to compare the results of inference based on different priors and their neuronized counterparts. Two real data examples are also analyzed in Section 5. And conclusions are given in Section 6.
+

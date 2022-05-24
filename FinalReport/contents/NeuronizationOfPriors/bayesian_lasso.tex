@@ -1,0 +1,45 @@
+\subsection{Bayesian Lasso}
+
+The Bayesian Lasso \cite{park2008bayesian} extends the original Lasso model by Tibshirani et al.\cite{tibshirani1996regression}. by using a Laplace prior on the coefficients $\boldsymbol{\beta}$.
+In order to efficiently compute this, the Park et al. use a decomposed representation of the Laplace distribution as follows:
+\begin{equation}
+    \frac{a}{2}e^{-a\vert \beta_i \vert} =
+    \int_0^\infty 
+     \Big(\frac{a^2}{2}e^{-a^2s/2}\Big)
+    \Big(\frac{1}{\sqrt{2\pi s}}e^{-z^2/(2s)}\Big)
+    ds
+\end{equation}
+
+This representations allows for each $\beta_i$ to be given the following distribution:
+\begin{align*}
+    \beta_i \sim \mathcal{N}(0, \sigma^2 \tau_i)\\
+    \sigma^2 \sim \pi(\sigma^2)d\sigma^2\\
+    \tau_i \sim \frac{\lambda^2}{2} e^{-\lambda^2\tau^2_i/2}d\tau^j
+\end{align*} 
+With this representation, the shrinkage of model coefficients can be controlled with 2 parameters:
+a global shrinkage parameter $\lambda^2$, and a parameter $\tau^2_i$ that is local to each coefficient.
+This representation is computationally convenient as the conditional distributions of $\boldsymbol{\beta}$ and $\sigma^2$ and $\tau^2_i$ have simple multivariate normal, inverse-gamma, and inverse-guassian distributions respectively.
+Likewise updating of the penalty parameter $\lambda$ can be done in a Bayesian manner, but in this paper the authors opted to use the estimate obtained from standard Lasso cross-validation.
+
+While this representation of the coefficient prior allows for a computationally feasible method for obtaining posterior estimates, optimizations cannot translate to other sparse prior distributions.
+For example, improvements such as inference with a reversible jump MCMC algorithm \cite{chen2011bayesian} do not directly apply to other spare priors.
+With this in mind, Shin et al. present a neuronized version of the Bayesian Lasso prior.
+
+Neuronization can be achieved simply be setting the activation function to: $T(t)=t$. 
+This is motivated by previous work such as Hoff et al. \cite{hoff2017lasso} which noted that the product representation of the prior on $\beta_i$ is similar to the Bayesian lasso.
+
+
+% \begin{itemize}
+%     \item Original uses Laplace prior on $\theta_j$.
+%     \item Neuronization is simple: let $T(x) = x$.
+%     \item The marginal density of $\theta$ this this choice of T is:
+%     \begin{equation}
+%         \int^\infty_0 \exp\{-\theta^2/(2\tau^2_w z^2/2) - z^2/2\}dz
+%     \end{equation}
+%     Not sure how they came to this equation though. 
+%     The joint distribution over the parameters of $\theta$ is given in equation 4 in the paper (which is similarly underived), but it is unclear what was marginalized over to get the above equation.
+%     \item Proposition 2.2 shows that the tails of the neuronized prior decay within a constant factor of the Laplace distribution.
+%     This is used as support for the similarity of the priors.
+%     \item \textbf{Question}: What does `the product representation of the parameter' mean?
+%     \item \textbf{Question}: What is the solutions path figure showing us? What is beta on the vertical axis?
+% \end{itemize}

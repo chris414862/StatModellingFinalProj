@@ -1,0 +1,122 @@
+\begin{thebibliography}{18}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bhattacharya et~al.(2016)Bhattacharya, Chakraborty, and
+  Mallick]{bhattacharya2016fast}
+Anirban Bhattacharya, Antik Chakraborty, and Bani~K Mallick.
+\newblock Fast sampling with gaussian scale mixture priors in high-dimensional
+  regression.
+\newblock \emph{Biometrika}, page asw042, 2016.
+
+\bibitem[Carvalho et~al.(2010)Carvalho, Polson, and
+  Scott]{carvalho2010horseshoe}
+Carlos~M Carvalho, Nicholas~G Polson, and James~G Scott.
+\newblock The horseshoe estimator for sparse signals.
+\newblock \emph{Biometrika}, 97\penalty0 (2):\penalty0 465--480, 2010.
+
+\bibitem[Castillo and van~der Vaart(2012)]{castillo2012needles}
+Isma{\"e}l Castillo and Aad van~der Vaart.
+\newblock Needles and straw in a haystack: Posterior concentration for possibly
+  sparse sequences.
+\newblock \emph{The Annals of Statistics}, 40\penalty0 (4):\penalty0
+  2069--2101, 2012.
+
+\bibitem[Castillo et~al.(2015)Castillo, Schmidt-Hieber, and Van~der
+  Vaart]{castillo2015bayesian}
+Isma{\"e}l Castillo, Johannes Schmidt-Hieber, and Aad Van~der Vaart.
+\newblock Bayesian linear regression with sparse priors.
+\newblock \emph{The Annals of Statistics}, 43\penalty0 (5):\penalty0
+  1986--2018, 2015.
+
+\bibitem[Chen et~al.(2011)Chen, Wang, and McKeown]{chen2011bayesian}
+Xiaohui Chen, Z~Jane Wang, and Martin~J McKeown.
+\newblock A bayesian lasso via reversible-jump mcmc.
+\newblock \emph{Signal Processing}, 91\penalty0 (8):\penalty0 1920--1932, 2011.
+
+\bibitem[George and McCulloch(1993)]{george1993variable}
+Edward~I George and Robert~E McCulloch.
+\newblock Variable selection via gibbs sampling.
+\newblock \emph{Journal of the American Statistical Association}, 88\penalty0
+  (423):\penalty0 881--889, 1993.
+
+\bibitem[Ghosh and Clyde(2011)]{ghosh2011rao}
+Joyee Ghosh and Merlise~A Clyde.
+\newblock Rao--blackwellization for bayesian variable selection and model
+  averaging in linear and binary regression: A novel data augmentation
+  approach.
+\newblock \emph{Journal of the American Statistical Association}, 106\penalty0
+  (495):\penalty0 1041--1052, 2011.
+
+\bibitem[Hoff(2017)]{hoff2017lasso}
+Peter~D Hoff.
+\newblock Lasso, fractional norm and structured sparse estimation using a
+  hadamard product parametrization.
+\newblock \emph{Computational Statistics \& Data Analysis}, 115:\penalty0
+  186--198, 2017.
+
+\bibitem[Kirkpatrick et~al.(1983)Kirkpatrick, Gelatt, and
+  Vecchi]{s1983optimization}
+S.~Kirkpatrick, C.~D. Gelatt, and M.~P. Vecchi.
+\newblock Optimization by simulated annealing.
+\newblock \emph{Science}, 220\penalty0 (4598):\penalty0 671--680, 1983.
+\newblock \doi{10.1126/science.220.4598.671}.
+
+\bibitem[Liu and Sabatti(2000)]{liu2000generalised}
+Jun~S Liu and Chiara Sabatti.
+\newblock Generalised gibbs sampler and multigrid monte carlo for bayesian
+  computation.
+\newblock \emph{Biometrika}, 87\penalty0 (2):\penalty0 353--369, 2000.
+
+\bibitem[Mengersen and Tweedie(1996)]{k1996the}
+K.~L. Mengersen and R.~L. Tweedie.
+\newblock Rates of convergence of the hastings and metropolis algorithms.
+\newblock \emph{Journal of the Royal Statistical Society: Series B
+  (Methodological)}, 58\penalty0 (1):\penalty0 101--121, 1996.
+
+\bibitem[Mitchell and Beauchamp(1988)]{mitchell1988bayesian}
+Toby~J Mitchell and John~J Beauchamp.
+\newblock Bayesian variable selection in linear regression.
+\newblock \emph{Journal of the american statistical association}, 83\penalty0
+  (404):\penalty0 1023--1032, 1988.
+
+\bibitem[Park and Casella(2008)]{park2008bayesian}
+Trevor Park and George Casella.
+\newblock The bayesian lasso.
+\newblock \emph{Journal of the American Statistical Association}, 103\penalty0
+  (482):\penalty0 681--686, 2008.
+
+\bibitem[Ro{\v{c}}kov{\'a} and George(2014)]{rovckova2014emvs}
+Veronika Ro{\v{c}}kov{\'a} and Edward~I George.
+\newblock Emvs: The em approach to bayesian variable selection.
+\newblock \emph{Journal of the American Statistical Association}, 109\penalty0
+  (506):\penalty0 828--846, 2014.
+
+\bibitem[Ro{\v{c}}kov{\'a} and George(2018)]{rovckova2018spike}
+Veronika Ro{\v{c}}kov{\'a} and Edward~I George.
+\newblock The spike-and-slab lasso.
+\newblock \emph{Journal of the American Statistical Association}, 113\penalty0
+  (521):\penalty0 431--444, 2018.
+
+\bibitem[Scott and Berger(2010)]{scott2010bayes}
+James~G Scott and James~O Berger.
+\newblock Bayes and empirical-bayes multiplicity adjustment in the
+  variable-selection problem.
+\newblock \emph{The Annals of Statistics}, pages 2587--2619, 2010.
+
+\bibitem[Shin and Liu(2021)]{shin2021neuronized}
+Minsuk Shin and Jun~S Liu.
+\newblock Neuronized priors for bayesian sparse linear regression.
+\newblock \emph{Journal of the American Statistical Association}, \penalty0
+  (just-accepted):\penalty0 1--43, 2021.
+
+\bibitem[Tibshirani(1996)]{tibshirani1996regression}
+Robert Tibshirani.
+\newblock Regression shrinkage and selection via the lasso.
+\newblock \emph{Journal of the Royal Statistical Society: Series B
+  (Methodological)}, 58\penalty0 (1):\penalty0 267--288, 1996.
+
+\end{thebibliography}

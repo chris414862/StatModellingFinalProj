@@ -1,0 +1,15 @@
+\begin{definition}[Neuronized prior]
+A neuronized prior is for $\theta_j$ is defined as
+\begin{equation} \label{eq:neuronized}
+    \theta_j := T(\alpha_j-\alpha_0)w_j,
+\end{equation}
+where $T$ is a non-decreasing activation function, the scale parameter $\alpha_j$ follows $N(0,1)$, and the weight parameter $w_j$ follows $N(0,\tau_w^2)$, all independently for $j = 1, \dots, p$.
+\end{definition}
+
+Under the neuronized prior for $\bm{\theta}$, and the prior $\pi(\sigma^2)$ for $\sigma^2$, the joint posterior distribution can be written as
+\begin{align} \label{eq:post_joint}
+    \pi(\valpha,\vw, \sigma^2 | \vy, \alpha_0) \propto \frac{\pi(\sigma^2)}{\sigma^n} \exp \{ -\frac{ \normtwo{\vy - X\vtheta(\valpha, \vw, \alpha_0)}^2}{2\sigma^2} -\frac{\valpha^T \valpha}{2} - \frac{\vw^T \vw}{2\tau_w^2} \},
+\end{align}
+where  $\valpha = \{ \alpha_1, \dots, \alpha_p \}^T$, $\vw = \{w_1, \dots, w_p\}^T$, and 
+$$\vtheta (\valpha, \vw, \alpha_0) = \{T(\alpha_1 - \alpha_0)w_1, \dots, T(\alpha_p - \alpha_0)w_p \}^T \mathrel{\widehat{=}} D_{\alpha} \vw,$$
+in which $D_\alpha$ is the diagonal matrix with diagonal elements the $T(\alpha_j - \alpha_0)$'s.

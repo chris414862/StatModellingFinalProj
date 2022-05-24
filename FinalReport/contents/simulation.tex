@@ -1,0 +1,135 @@
+\subsection{Simulation Settings}
+
+We generate synthetic data to conduct simulation studies under the linear regression model. We compare the effect of some standard priors including the Bayesian LASSO, the horseshoe and the discrete SpSL with their neuronized counterparts. The optimization-based algorithms EMVS, SSLASSO and CAAN are also included in comparison. We implemented the proposed algorithms in \citet{shin2021neuronized} and a few R packages are used including Nprior, EMVS and SSLASSO. The notations of the methods for priors in comparison are as follows,
+\begin{itemize}[itemsep=0pt]
+    \item[-] SpSL-G: Standard discrete SpSL prior, $\pi_0(\theta) = \delta_0(\theta)$, $\pi_1(\theta) = \text{Gaussian}(\theta)$.
+    \item[-] N-SpSL-L(Exact): The neuronized SpSL prior implemented via the exact Gibbs sampler as in Section \ref{sec:neu_dis_spsl_com}.
+    \item[-] N-SpSL-L(RW): The neuronized SpSL prior with a Laplace-like slab via Algorithm \ref{alg:neu_MCMC} using the RWMH to update $\alpha$.
+    \item[-] N-SpSL-C(RW): The neuronized SpSL prior with a Cauchy slab via Algorithm \ref{alg:neu_MCMC} using the RWMH to update $\alpha$.
+    \item[-] HS: The Horseshoe prior.
+    \item[-] N-HS(RW): The neuronized Horseshoe prior via Algorithm \ref{alg:neu_MCMC}.
+    \item[-] BL: The Bayesian LASSO prior.
+    \item[-] N-BL(RW): The neuronized Bayesian LASSO prior via Algorithm \ref{alg:neu_MCMC}.
+    \item[-] N-SpSL(MAP): The neuronized SpSL using the CAAN optimization.
+    \item[-] N-BL(MAP): The neuronized Bayesian LASSO using the CAAN optimization.
+    \item[-] EMVS, SSLASSO : EMVS and SSLASSO.
+    \item[-] LASSO(CV): LASSO with cross validation.
+\end{itemize}
+
+
+Note that the default $\tau_w$ is set to be 1 if not specified. We use $\nu_1 = 10$ for EMVS and $\lambda_1 = 0.1$ for SSLASSO.
+As is conducted in \citet{shin2021neuronized}, for neuronized priors sampled by MCMC, Bayesian averaging is used for estimation and prediction. 
+
+The Median probability model (MPM) is used to do variable selection, which picks variables with estimated posterior inclusion
+probabilities greater than 0.5, i.e. variables that appear in at least half of the visited models. For neuronized priors, we consider selecting the variable $j$ when
+$$1-\frac{1}{1+ T(\alpha_j-\alpha_0)^2} > 0.5.$$
+
+\citet{shin2021neuronized} uses a half-collapsed sampling strategy to implement the inference with the SpSL prior to achieve high efficiency. Since no detailed algorithm is provided in the paper, it is hard to figure out and implement in a short time. We use the orthogonal data augmentation method proposed in \citet{ghosh2011rao} instead to implement models with SpSL prior.
+
+We generated the synthetic data by considering a Toeplitz design. The covariates $X_i,\; i=1,\dots,n$ are generated from $N(0,\Sigma)$, where $\Sigma = (\sigma_{lk})$ with $\sigma_{lk} = 0.7^{|l-k|}$ for $l,k = 1,\dots p$. We generated two scenarios of low-dimentional cases, in which $n=200$, $p=50$, and $n=400$, $p=100$, respectively. The number of non-zero coefficients is $p/10$ and they take values from $\pm 0.2$. And another two high-dimentional cases are considered, with $n=100$, $p=300$, and $n=150$, $p=1000$. First five coefficients are non-zero and they are randomly $\{\pm 0.4, \pm 0.45, \pm 0.5, \pm 0.55, \pm 0.6\}$. The error variance is set to be $\sigma^2=1$ for all scenarios.
+
+
+\subsection{Metrics}
+\label{sim_metrics}
+Shin et al. use three metrics to measure correct sparsity of posterior distributions.
+
+First is mean squared error(MSE) of the predicted coefficient vector from the true data generating parameter vector.
+MSE for multivariate parameter estimation is calculated as follows.
+\begin{enumerate}
+    \item Create estimate $\hat{\boldsymbol{\beta}}$ from sparse prior or equivalent neuronization.
+    \item Compute the squared Euclidean distance from the estimate to the true data generating parameter vector.
+    \label{mse_computation}
+    \item Repeat for $n$ dataset instantiations.
+    \item Calculate the average squared Euclidean distatnce across all $n$ distances.
+\end{enumerate}
+
+Second is cosine similarity.
+This is calculated in a similar manner as MSE above, except that before step \ref{mse_computation} each estimate is also normalized by it's own euclidean distance from the origin.
+
+%mcc
+Next is the Mathews correlation coefficient (MCC).
+This measure is used to determine how correlated each sparse prior is with predicting non-negative coefficients in the true data generating parameter vector.
+The MCC is defined in terms of \textit{tp} (true positive predictions), \textit{fp} (false positive predictions), \textit{tn} (true negative predictions), and \textit{fn} (false negative predictions).
+To clarify, false negatives are instances in which the inference (derived from a particular sparse prior) predicted a zero coefficient for a predictor, but the true coefficient was actually non-zero.
+
+%fp
+The FP metric, then, is simply the average number of times (over dataset instantiations) a coefficient in the full coefficient vector was estimated to be non-zero, when in fact the true scalar parameter was zero.
+
+%ess
+The final metric for the simulated dataset was effective sample size (ESS). 
+It is intended to give an indication of the number of uncorrelated MCMC samples.
+It is calculated as:
+\begin{equation*}
+    \frac{N}{1+2*\sum_t^\infty \rho(t)}
+\end{equation*}
+Where $N$ is the number of MCMC samples and $\rho(t)$ is lag-t autocorrelation.
+\subsection{Simulation results}
+\label{simulation_results}
+
+Tables \ref{table:low1}, \ref{table:low2}, \ref{table:high1}, and \ref{table:high2} show the results of the simulation on the low dimensional and high dimensional settings. In general, the results are identical to the ones in the original paper. We can see from the results that no procedure clearly dominate others in all situations for all criteria. Bayesian averaging results generally have a better performance than the corresponding MAP estimator. And the Lasso-based procedures typically show the best estimation performance under the low-dimensional settings, but they tends to select a large number of false positives. For high dimensional scenarios, the SpSL based priors out performs other methods.
+
+The tables also list the performances of optimization-based SpSL procedures including the CAAN, the EMVS, and the SSLasso. The results show that, overall, the CAAN and the SSLasso significantly outperformed the EMVS algorithms in terms of estimation and model selection.
+
+\input{Tables/low1_table}
+
+\input{Tables/low2_table}
+
+\input{Tables/high1_table}
+
+\input{Tables/high2_table}
+
+\subsection{Real data examples}
+To validate the results in \ref{simulation_results}, Shin et al. applied all procedures to two real-world datasets (described in Section \ref{real_world_datasets}).
+Since the true data generating parameter is no longer known, evaluating each procedure was altered slightly from Section \ref{sim_metrics}.
+These changes are described in Section \ref{real_world_eval}.
+We then discuss our results as they relate to those reported by Shin et al. in Section \ref{real_world_discuss}
+
+\subsubsection{Datasets}
+\label{real_world_datasets}
+The first dataset is the Boston Housing data. 
+This dataset has $n=506$ datapoints that record information about distinct houses in the Boston area.
+Shin et al. do not mention which version of this dataset they used, but we obtained it through the mlbench package available on CRAN.
+
+This version has 14 features with the \textit{medv} (i.e. median value) feature being the target variable for regression.
+Shin et al. mention they only used 10 of the other variables for regression, but neglect to mention which ones were used.
+We therefore used all remaining 13 for our regression experiments on this dataset.
+
+The second dataset used was the Bardet-Beidl syndrome dataset which contains $p=200$ features indicating gene expression information in $n=120$ rats.
+Because this dataset has $p>n$ features, inference with most of the tested algorithms took longer than with the Boston Housing dataset.
+
+\subsubsection{Evaluation}
+\label{real_world_eval}
+Shin et al. used three metrics to evaluate shrinkage prior performance on the datasets.
+
+%mspe
+The first is mean-squared \textit{predictive} error (MSPE).
+This is similar to the MSE described above, but the squared error is taken with respect to the regression variable rather than the full coefficient vector. 
+As such, the MSPE takes it's average over every predicted datapoint in the dataset.
+This is in contrast to MSE which only measured the squared error between the one parameter vector estimate obtained from the posterior and the true vector.  
+Since Shin et al. repeated their experiments 100 times, each MSPE estimate was averaged again.
+% and the results are reported in Tables \ref{table:boston} and \ref{table:bardet}.
+
+%cos angle
+Shin et al. also used cosine angle as a metric in their real-world dataset experiments.
+Similar to the MSE measure, the cosine similarity could no longer be made with respect to the coefficient vector.
+If $\mathbf{y}$ is the dependent regression variable in the dataset and the $\mathbf{\hat{y}}$ is the prediction, then the cosine similarity used here in $\mathbf{y}^T \mathbf{\hat{y}}/(\Vert\mathbf{y}\Vert\cdot\Vert\mathbf{\hat{y}}\Vert)$.
+This measure indicates the correlation between the prediciton and actual response variable
+
+% model size
+The final metric used is \textit{model size}.
+This is simply the average number of non-zero coefficients chosen by each procedure. 
+\subsubsection{Discussion}
+\label{real_world_discuss}
+The results for the experiments on the Boston Housing dataset can be found in Table \ref{table:boston} and the Bardet-Biedl experiments in Table \ref{table:bardet}.
+
+\input{Tables/boston_table}
+In the Boston housing experiments there is a striking similarity in all neuronized procedures.
+We hypothsise that this is due mainly to the similar optimization method that is used in each of them. 
+It is also noteworthy that the model sizes of each neuronized implementation are substantially less than both the Bayesian Lasso (BL) and Lasso procedures.
+
+
+\input{Tables/bardet_table}
+In the Bardet-Biedl experiments, however, there was a lot more variability in the model sizes induced by each procedure. 
+This trend is matched in the MSPE for each procedure, which saw scores as low as .017 for the neuronized horseshoe prior, all the way to .907 for the Bayesian Lasso. 
+The Bayesian Lasso, in particular, appeared to struggle with finding good regression coefficient estimates as evidenced by it's cosine angle of .089. 
+Further study is needed to explain the behavior of the Baysian Lasso in this setting.

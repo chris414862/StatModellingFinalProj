@@ -1,0 +1,137 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{bbding}
+\usepackage{bm}
+\usepackage{xcolor} 
+% \usepackage[numbers, sort&compress]{natbib}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{algorithm, algpseudocode}
+\usepackage{enumitem}
+
+\newcommand{\red}{\color{red}}
+\newcommand{\bb}{\color{black}}
+\newcommand{\valpha}{\bm{\alpha}}
+\newcommand{\vw}{\bm{w}}
+\newcommand{\vy}{\bm{y}}
+\newcommand{\vr}{\bm{r}}
+\newcommand{\vtheta}{\bm{\theta}}
+\newcommand{\normtwo}[1]{\left\lVert#1\right\rVert_2}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\title{Neuronized Priors Project}
+\author{Chistopher Crabtree, Lanxin Yang, Yunshan  Duan}
+%\date{October 2021}
+
+\begin{document}
+
+\maketitle
+
+
+
+% \Huge{\textbf{Report}}
+% \normalsize
+% \begin{enumerate}
+%     \item Intro: Yunshan \checkmark
+%     \item Neuronized Prior def.: Yunshan \checkmark
+%     \item Neuronization Standard sparse priors
+%     \begin{enumerate}
+    
+%         \item Standard sparse priors
+%             \begin{enumerate}
+%                 \item SpSl: Yunshan \checkmark
+%                 \item Bayesian Lasso: Chris\checkmark 
+%                 \item HS, Cauchy: Lanxin\checkmark
+%             \end{enumerate}
+%         \item Neuronization
+%             \begin{enumerate}
+%                 \item SpSl: Yunshan \checkmark
+%                 \item Bayesian Lasso: Chris \checkmark
+%                 \item HS, Cauchy: Lanxin\checkmark
+%                 \item How to find neuronized priors: Lanxin\checkmark
+%             \end{enumerate}
+%     \end{enumerate}
+%     \item Sampling/Optim.: Yunshan \checkmark
+%     \item Theory: Chris
+%     \item Simulation: 
+%     \begin{enumerate}
+%         \item Synthetic data: Yunshan \checkmark
+%         \item Metrics : Chris \checkmark
+%         \item Analysis: Yunshan \checkmark
+%     \end{enumerate}
+%     \item Real data: Chris \checkmark
+%     \item Conclusion: Lanxin
+% \end{enumerate}
+
+% \Huge{\textbf{Video}}
+% \normalsize
+% \begin{enumerate}
+%     \item Lanxing: 1. Intro, 2.Neronized Prior def., and 3.a Standard sparse priors
+%     \item Yunshan: 3.b Neuronization, 4. Sampling/Optim, 5.Theory? 
+%     \item Chris: 6. Simulation, 7. Real data, 8.Conclusion
+% \end{enumerate}
+
+\begin{abstract}
+  This paper presents a description and replication of the primary results of ``Neuronized Priors for Bayesian Sparse Linear Regression'' by Minsuk Shin and Jun S. Liu. We implemented the MCMC sampling algorithm and the MAP optimization algorithm for the neuronized priors proposed in this paper. And we also implemented the methods of their standard shrinkage prior counterparts, including the SpSL, Bayesian LASSO, and horseshoe priors. Simulation studies and real data examples are investigated, and comparison between optimization methods are conducted. The results are parallel to those in the original paper, that neuronized priors yields similar performance as the standard shrinkage priors, and have computational advantage by reducing the complexity when sampling from the posteriors.
+\end{abstract}
+
+\section{Introduction}
+
+\input{contents/introduction}
+
+\section{Neuronized prior} \label{sec:neu_def}
+
+\input{contents/neuro_def}
+
+\section{Neuronization of Standard Sparse Priors}
+
+\input{contents/NeuronizationOfPriors/overview}
+
+\section{Managing Neuronized Priors }
+
+\input{contents/ManagingNPrior}
+
+\section{Sampling and Optimization With Neuronized Priors}
+
+\input{contents/sample_neuro}
+
+\newpage
+\section{Simulation and Real data examples}
+
+\input{contents/simulation}
+
+\section{Conclusion}
+
+\input{contents/Conclusion}
+%
+\section{Chris Crabtree (My Own) - Contribution}
+In terms of experments, I helped by implementing the Lasso and Baysian Lasso procedures. 
+I also started on the SSLASSO procedure, but ran out of time. 
+Additionally, I took charge of  navigating the evaluation produres for the experiments.
+The original authors were quite terse in their descriptions and left several experimental settings ambiguous or underspecified.
+I was tasked, then, with exploring several possible options for evaluation to see which type produced the results seen in the paper.
+
+Since I made those contributions, I naturally was responsible for the bulk of the writing of the report w.r.t. the lasso procedures and the presentation of experimental results.
+I also helped create the introductory slides for the video presentation.
+\section{Yunshan Duan - Contribution}
+Yunshan was for sure the MVP of the group. 
+She implemented the majority of the algorithms and also wrote the largest chunks of the paper
+
+\section{Lanxin Yang - Contribution}
+Lanxin helped by implementing the Horseshoe prior and filling out large portions of the Standard Prior section of the report.
+She was also responsible for the video editing.
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document} 

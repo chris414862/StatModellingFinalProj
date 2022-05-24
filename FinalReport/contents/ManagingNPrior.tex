@@ -1,0 +1,27 @@
+\subsection{Find the Activation Function to Match a Given Prior}
+In order to find an activation function $T(t)$ for the neuronized prior that discussed in section 3, the author introduce a family of $T(t)$, $T_\phi$, and then find the $\phi$ which could minimize the distance between the result neuronized prior and the target distribution $\pi(\theta)$. To enhance flexibility, the function space spanned by a class of B-spline basis function $B(t)$, B is a vector of $K$ dimension rational space where $\phi \in R^K$ . Consequently, $T_\phi(t)=B(t)\phi$.
+
+The essay use neuronized horseshoe prior as an example, whose activation function is $T(t)=exp(\lambda_1 sign(t)t^2+\lambda_2 t+\lambda_3)$. In this case, $\phi = {\lambda_1,\lambda_2,\lambda_3}$. The class of activation function for horseshoe now become:
+    \begin{align}
+        T_\zeta(t) = exp(\lambda_1 sign(t)t^2+\lambda_2 t+\lambda_3)+B(t)\phi\\
+        \zeta=\{\lambda_1,\phi\}
+    \end{align}
+As the determinant parameter of prior's tail behavior, $\lambda_1$ can be found to match the tail of the horseshoe prior base on the inequality property: For $\kappa > 0, c_1, c_2$ are some  positive constants, there exist: 
+\begin{align}
+    c_1(log|\theta|)^{-\frac{1}{2}}|\theta|^{(-1-\frac{1}{2\lambda_1})(1+\kappa})\leq\pi(\theta)\leq c_2(log|\theta|)^{-\frac{1}{2}}|\theta|^{(-1-\frac{1}{2\lambda_1})(1+\kappa})
+\end{align}
+After $\lambda_1$ is fixes, we generate a large number (S) of samples from $\Tilde{\theta_i}_{\zeta,i}=T_{\zeta,\phi}(\alpha_i-\alpha_0)\omega_i$ and $\theta_i\sim \pi(\theta), i = 1, 2,..., S$. Then by using a search algorithm to find $zeta$ to minimize $\sum_{i=1}^S |\Tilde{\theta_\zeta}^{(i)}-\theta^{(i)}|$\cite{s1983optimization}, where $\theta_\zeta^{(i)},\theta^{(i)}$ are the $i$th largest number of the generated samples.
+
+\subsection{Choosing Hyper-Parameters}
+There are two hyper-parameter that need to be determined: the global shrinkage parameter $\tau_\omega^2$ and the bias parameter $\alpha_0$.
+As for the value of $\alpha_0$, there are several situation:
+\begin{itemize}
+    \item For continuous neuronized prior,$\alpha_0$ is set to the default value 0.
+    \item For discrete Spsl prior, where $P(T(\alpha_j - \alpha_0) = 0|\alpha_0)=\Phi(\alpha_0)$. As the author stated for the discrete Spsl prior, a hyper-prior can be imposed on $\alpha_0$ so the the sparsity level is determined by the data set.
+    \item Sampling $\alpha_0$ on other parameter in Gibbs sampling and RWMH algorithm is highly inefficient due to the high correlation of its posterior with that of other parameters.
+\end{itemize}
+When choosing value for $\tau_\omega^2$:
+\begin{itemize}
+    \item When $E (T^2(\alpha))$ is bounded, the value of $\tau_\omega^2$ need to reflect the signal strength in the data. However, a theoretical justified selection for $\tau_\omega^2$ has not been found.
+    \item When $E (T^2(\alpha))$ doesn't bound such as horseshoe and Cauchy, we first find a shrinkage factor $\kappa_j$: $E_j (\kappa_0) = min{0.01,0.1 \times n/p}$, which determine the shrinkage level of $\theta_j$. Then we calculate $\tau_\omega^2$ by $$\tau_\omega^2=\frac{1-\kappa_j}{\kappa T^2(\alpha_j)}$$
+\end{itemize}
